@@ -5,6 +5,9 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
+
+import { getLoginToken } from "../../global";
 
 const useStyles = makeStyles({
   root: {
@@ -23,15 +26,23 @@ const useStyles = makeStyles({
   },
 });
 
+const loggedIn = getLoginToken();
+
 export default function News() {
   const classes = useStyles();
+  const history = useHistory();
+
   useEffect(() => {
     (async () => {
+      if (!loggedIn) {
+        alert("You need to log in to view this page");
+        history.push("/signin");
+      }
       const response = await axios.get("http://localhost:5000/news");
 
       setNews(response.data.data.results);
     })();
-  }, []);
+  }, [history]);
 
   const [news, setNews] = useState([]);
 

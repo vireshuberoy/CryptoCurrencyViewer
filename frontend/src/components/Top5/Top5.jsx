@@ -50,7 +50,7 @@ export default function Top5(props) {
         console.log(err);
       }
     })();
-  }, []);
+  }, [history]);
 
   function returnCryptocurrencyData(crypto, idx) {
     return (

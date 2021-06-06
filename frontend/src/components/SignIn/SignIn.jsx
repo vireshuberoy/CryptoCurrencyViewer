@@ -18,7 +18,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      CryptoCurrencyViewer
+      BANKS
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -69,7 +69,10 @@ export default function SignIn() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+    >
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

@@ -8,7 +8,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { getLoginToken } from "../../global";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const loggedIn = getLoginToken();
 
@@ -66,7 +66,7 @@ export default function Cryptocurrency(props) {
       );
       setMetadata(response.data.data[0]);
     })();
-  }, []);
+  }, [history, id]);
 
   return (
     <div id="cryptocurrency" style={{ margin: 10 }}>

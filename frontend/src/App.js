@@ -7,12 +7,15 @@ import Top5 from "./components/Top5/Top5.jsx";
 import Top30 from "./components/Top30/Top30";
 import News from "./components/News/News.jsx";
 import MarketCrash from "./components/MarketCrash/MarketCrash";
+import Footer from "./components/Footer/Footer";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{
+      backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6oUJLFx6e_CAWDP3G__XPcfVn6mAH4RveoA&usqp=CAU')",
+    }}>
       <Router>
         <NavBar />
         <Switch>
@@ -25,6 +28,7 @@ function App() {
           <Route path="/news" component={News} exact />
           <Route path="/marketcrash" component={MarketCrash} exact />
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

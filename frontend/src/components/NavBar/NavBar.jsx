@@ -30,10 +30,16 @@ export default function NavBar() {
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-              BANKS
+              <img
+                src="https://yt3.ggpht.com/ytc/AAUvwng6RvZAMLtfZR4H9HR8hpRGolct0_mg6dzLl4mWtw=s900-c-k-c0x00ffffff-no-rj"
+                style={{ width: 200, height: 100, marginTop: 10 }}
+              />
             </Link>
           </Typography>
-          <Link to="/marketcrash" style={{ textDecoration: "none", color: "white" }}>
+          <Link
+            to="/marketcrash"
+            style={{ textDecoration: "none", color: "white" }}
+          >
             <Button color="inherit">Market Crash</Button>
           </Link>
           <Link to="/top5" style={{ textDecoration: "none", color: "white" }}>
@@ -42,10 +48,7 @@ export default function NavBar() {
           <Link to="/top30" style={{ textDecoration: "none", color: "white" }}>
             <Button color="inherit">Top 300 Cryptocurrencies</Button>
           </Link>
-          <Link
-            to="/news"
-            style={{ textDecoration: "none", color: "white" }}
-          >
+          <Link to="/news" style={{ textDecoration: "none", color: "white" }}>
             <Button color="inherit">News</Button>
           </Link>
           {!loggedIn ? (

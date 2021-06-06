@@ -42,7 +42,7 @@ export default function BasicTable() {
       setLoading(false);
       setRows(response.data.data);
     })();
-  }, [page]);
+  }, [page, history]);
 
   return loading ? (
     <div
