@@ -54,6 +54,10 @@ export default function SignIn() {
 
   async function onSubmit(e) {
     e.preventDefault();
+    if (!email || !password) {
+      alert("Please make sure to fill all the fields");
+      return;
+    }
 
     const response = await axios.post("http://localhost:5000/signin", {
       email,
@@ -69,10 +73,7 @@ export default function SignIn() {
   }
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-    >
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

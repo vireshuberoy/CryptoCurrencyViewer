@@ -111,7 +111,7 @@ export default function SignUp() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ height: "70vh" }}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

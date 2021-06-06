@@ -13,9 +13,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App" style={{
-      backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6oUJLFx6e_CAWDP3G__XPcfVn6mAH4RveoA&usqp=CAU')",
-    }}>
+    <div
+      className="App"
+    >
       <Router>
         <NavBar />
         <Switch>

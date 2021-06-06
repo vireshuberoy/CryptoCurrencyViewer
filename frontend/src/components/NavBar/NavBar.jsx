@@ -29,11 +29,8 @@ export default function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-              <img
-                src="https://yt3.ggpht.com/ytc/AAUvwng6RvZAMLtfZR4H9HR8hpRGolct0_mg6dzLl4mWtw=s900-c-k-c0x00ffffff-no-rj"
-                style={{ width: 200, height: 100, marginTop: 10 }}
-              />
+            <Link to="/" style={{ textDecoration: "none", color: "white", fontWeight: "600", fontSize: "32px" }}>
+              BANKS
             </Link>
           </Typography>
           <Link
