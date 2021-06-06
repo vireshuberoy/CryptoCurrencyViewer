@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { PASS_REGEX, PASS_VALID_MSGS } from "../../global.js";
 
 function Copyright() {
   return (
@@ -47,12 +48,14 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+  const passwordRef = useRef();
+  const confPasswordRef = useRef();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorState, setErrorState] = useState({
+  const [errorsState, setErrorsState] = useState({
     firstName: false,
     lastName: false,
     email: false,
@@ -60,10 +63,67 @@ export default function SignUp() {
     confirmPassword: false,
     passwordsSame: false,
   });
+  const [passwordContains, setPasswordContains] = useState({
+    length: false,
+    digit: false,
+    case: false,
+    specialCharacter: false,
+  });
+  const [enteringPassword, setEnteringPassword] = useState(false);
   const history = useHistory();
 
+  function setAnErrorInErrorsState(property, state = true) {
+    let obj = { ...errorsState };
+    obj[property] = state;
+    setErrorsState(obj);
+  }
+
+  function checkIfPasswordSame() {
+    if (
+      passwordRef.current.value !== confPasswordRef.current.value ||
+      !passwordRef.current.value
+    ) {
+      if (!errorsState["confirmPassword"])
+        setAnErrorInErrorsState("confirmPassword");
+    } else if (errorsState["confirmPassword"]) {
+      setAnErrorInErrorsState("confirmPassword", false);
+    }
+  }
+
+  function validatePassword() {
+    const keys = Object.keys(PASS_REGEX);
+    const values = Object.values(PASS_REGEX);
+
+    if (!passwordRef.current.value) {
+      setPasswordContains({
+        length: false,
+        digit: false,
+        case: false,
+        specialCharacter: false,
+      });
+    }
+
+    const testObj = { ...passwordContains };
+    values.forEach((ele, i) => {
+      if (ele.test(passwordRef.current.value)) {
+        testObj[keys[i]] = true;
+      } else {
+        testObj[keys[i]] = false;
+      }
+      if (!ele.test(passwordRef.current.value)) {
+        if (!errorsState["password"]) setAnErrorInErrorsState("password");
+      } else if (errorsState["password"]) {
+        setAnErrorInErrorsState("password", false);
+      }
+    });
+    setPasswordContains(testObj);
+
+    if (!enteringPassword) setEnteringPassword(true);
+  }
+
+
   function checkFormValidity() {
-    let obj = { ...errorState };
+    let obj = { ...errorsState };
 
     if (validateEmail(email)) obj.email = true;
     else obj.email = false;
@@ -78,7 +138,7 @@ export default function SignUp() {
     if (password === confirmPassword) obj.passwordsSame = true;
     else obj.passwordsSame = false;
 
-    setErrorState(obj);
+    setErrorsState(obj);
 
     for (let i in obj) if (!obj[i]) return false;
     return true;
@@ -130,7 +190,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 onBlur={checkFormValidity}
-                error={!errorState.firstName}
+                error={!errorsState.firstName}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 id="firstName"
@@ -144,7 +204,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 onBlur={checkFormValidity}
-                error={!errorState.lastName}
+                error={!errorsState.lastName}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 id="lastName"
@@ -160,7 +220,7 @@ export default function SignUp() {
                 fullWidth
                 type="email"
                 onBlur={checkFormValidity}
-                error={!errorState.email}
+                error={!errorsState.email}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 id="email"
@@ -174,8 +234,13 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                onBlur={checkFormValidity}
-                error={!errorState.password}
+                inputRef={passwordRef}
+                onInput={() => validatePassword()}
+                onBlur={() => {
+                  checkFormValidity();
+                  validatePassword();
+                }}
+                error={!errorsState.password}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 name="password"
@@ -184,15 +249,36 @@ export default function SignUp() {
                 id="password"
                 autoComplete="current-password"
               />
+              {enteringPassword ? (
+                <ul style={{ color: "red" }}>
+                  {Object.keys(PASS_VALID_MSGS).map((ele, i) => {
+                    if (passwordContains[ele]) {
+                      return (
+                        <li style={{ color: "green" }} key={i}>
+                          {Object.values(PASS_VALID_MSGS)[i]}
+                        </li>
+                      );
+                    } else {
+                      return (
+                        <li key={i}>{Object.values(PASS_VALID_MSGS)[i]}</li>
+                      );
+                    }
+                  })}
+                </ul>
+              ) : null}
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                onBlur={checkFormValidity}
-                error={!errorState.confirmPassword || !errorState.passwordsSame}
+                error={
+                  !errorsState.confirmPassword || !errorsState.passwordsSame
+                }
                 value={confirmPassword}
+                inputRef={confPasswordRef}
+                onBlur={checkIfPasswordSame}
+                onInput={checkIfPasswordSame}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 name="confirm-password"
                 label="Confirm Password"
@@ -200,7 +286,7 @@ export default function SignUp() {
                 id="confirm-password"
                 autoComplete="confirm-password"
                 helperText={
-                  errorState.passwordsSame
+                  errorsState.passwordsSame
                     ? null
                     : "Your passwords are not the same"
                 }
