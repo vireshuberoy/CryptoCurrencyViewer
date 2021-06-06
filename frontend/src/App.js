@@ -8,6 +8,8 @@ import Top30 from "./components/Top30/Top30";
 import News from "./components/News/News.jsx";
 import MarketCrash from "./components/MarketCrash/MarketCrash";
 import Footer from "./components/Footer/Footer";
+import Profile from "./components/Profile/Profile";
+import Admin from "./components/Admin/Admin";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -20,13 +22,16 @@ function App() {
         <NavBar />
         <Switch>
           <Route path="/" component={Homepage} exact />
+          <Route path="/profile" component={Profile} exact />
           <Route path="/signin" component={SignIn} exact />
           <Route path="/signup" component={SignUp} exact />
+          <Route path="/editprofile/edit" component={SignUp} exact />
           <Route path="/cryptocurrency/:id" component={Cryptocurrency} exact />
           <Route path="/top5" component={Top5} exact />
           <Route path="/top30" component={Top30} exact />
           <Route path="/news" component={News} exact />
           <Route path="/marketcrash" component={MarketCrash} exact />
+          <Route path="/admin" component={Admin} exact />
         </Switch>
         <Footer />
       </Router>

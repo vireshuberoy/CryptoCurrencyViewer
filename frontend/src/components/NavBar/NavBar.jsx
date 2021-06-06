@@ -29,10 +29,24 @@ export default function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link to="/" style={{ textDecoration: "none", color: "white", fontWeight: "600", fontSize: "32px" }}>
+            <Link
+              to="/"
+              style={{
+                textDecoration: "none",
+                color: "white",
+                fontWeight: "600",
+                fontSize: "32px",
+              }}
+            >
               BANKS
             </Link>
           </Typography>
+          <Link
+            to="/profile"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <Button color="inherit">Profile</Button>
+          </Link>
           <Link
             to="/marketcrash"
             style={{ textDecoration: "none", color: "white" }}
@@ -40,7 +54,9 @@ export default function NavBar() {
             <Button color="inherit">Market Crash</Button>
           </Link>
           <Link to="/top5" style={{ textDecoration: "none", color: "white" }}>
-            <Button color="inherit">Top 5 Cryptocurrencies In India</Button>
+            <Button color="inherit">
+              Top 5 Cryptocurrencies In {loggedIn?.country || "INR"}
+            </Button>
           </Link>
           <Link to="/top30" style={{ textDecoration: "none", color: "white" }}>
             <Button color="inherit">Top 300 Cryptocurrencies</Button>

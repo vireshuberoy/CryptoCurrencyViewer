@@ -37,7 +37,7 @@ export default function BasicTable() {
       }
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/getTop30?page=${page}`
+        `http://localhost:5000/getTop30?page=${page}&currency=${loggedIn?.currency}`
       );
       setLoading(false);
       setRows(response.data.data);
@@ -75,7 +75,7 @@ export default function BasicTable() {
               <strong>Symbol</strong>
             </TableCell>
             <TableCell>
-              <strong>Price (INR)</strong>
+              <strong>Price ({loggedIn?.currency})</strong>
             </TableCell>
             <TableCell align="right">
               <strong>Visit Page</strong>

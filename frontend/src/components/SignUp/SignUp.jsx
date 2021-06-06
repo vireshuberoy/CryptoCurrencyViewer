@@ -11,8 +11,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { CountryDropdown } from "react-country-region-selector";
+import SelectCurrency from "react-select-currency";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import { PASS_REGEX, PASS_VALID_MSGS } from "../../global.js";
+
+const Filter = require("bad-words");
+const filter = new Filter();
 
 function Copyright() {
   return (
@@ -44,9 +49,12 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+let heading = "Sign Up";
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
+  const location = useLocation();
+  if (location.pathname === "/editprofile/edit") heading = "Edit Profile";
 
   const passwordRef = useRef();
   const confPasswordRef = useRef();
@@ -55,6 +63,8 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [country, setCountry] = useState("");
+  const [currency, setCurrency] = useState("");
   const [errorsState, setErrorsState] = useState({
     firstName: false,
     lastName: false,
@@ -62,6 +72,7 @@ export default function SignUp() {
     password: false,
     confirmPassword: false,
     passwordsSame: false,
+    username: false,
   });
   const [passwordContains, setPasswordContains] = useState({
     length: false,
@@ -70,6 +81,7 @@ export default function SignUp() {
     specialCharacter: false,
   });
   const [enteringPassword, setEnteringPassword] = useState(false);
+  const [username, setUsername] = useState("");
   const history = useHistory();
 
   function setAnErrorInErrorsState(property, state = true) {
@@ -121,7 +133,6 @@ export default function SignUp() {
     if (!enteringPassword) setEnteringPassword(true);
   }
 
-
   function checkFormValidity() {
     let obj = { ...errorsState };
 
@@ -137,6 +148,13 @@ export default function SignUp() {
     else obj.confirmPassword = false;
     if (password === confirmPassword) obj.passwordsSame = true;
     else obj.passwordsSame = false;
+    if (username) obj.username = true;
+    else obj.username = false;
+
+    if (filter.isProfane(username))
+      alert(
+        "You can't choose that for a username, please choose something else"
+      );
 
     setErrorsState(obj);
 
@@ -154,11 +172,14 @@ export default function SignUp() {
         email,
         password,
         confirmPassword,
+        username,
+        currency,
+        country,
       });
       console.log(response.data);
       if (response.data.success) {
         console.log("redirecting");
-        history.push("/");
+        history.push("/signin");
       } else {
         alert(response.data.message);
       }
@@ -171,14 +192,14 @@ export default function SignUp() {
   }
 
   return (
-    <Container component="main" maxWidth="xs" style={{ height: "70vh" }}>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          {heading}
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -218,6 +239,20 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                onBlur={checkFormValidity}
+                error={!errorsState.username}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                id="username"
+                label="Username"
+                name="username"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
                 type="email"
                 onBlur={checkFormValidity}
                 error={!errorsState.email}
@@ -227,6 +262,27 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CountryDropdown
+                style={{
+                  width: "100%",
+                  height: 50,
+                  fontSize: "14px",
+                  padding: 15,
+                }}
+                value={country}
+                onChange={(e) => setCountry(e)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SelectCurrency
+                style={{ width: "100%", height: 50, fontSize: "14px" }}
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                name="Currency"
+                autoComplete="none"
               />
             </Grid>
             <Grid item xs={12}>
@@ -300,7 +356,7 @@ export default function SignUp() {
             className={classes.submit}
             onClick={(e) => handleSubmit(e)}
           >
-            Sign Up
+            {heading}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>

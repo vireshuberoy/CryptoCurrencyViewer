@@ -1,2 +1,5 @@
-{"firstName":"Viresh","lastName":"Uberoy","email":"viresh@uberoy.com","password":"Password@01","confirmPassword":"Password@01","_id":"hqTugV8zkvfp1xE3"}
-{"firstName":"asdf","lastName":"asdf","email":"asdfasdf@sadr.asdf","password":"Password@01","confirmPassword":"Password@01","_id":"QwOHk0Rf811KToPM"}
+{"firstName":"Viresh","lastName":"Uberoy","email":"viresh@uberoy.com","password":"Password@01","confirmPassword":"Password@01","username":"Viresh","country":"India","currency":"USD","_id":"oY4ZFndIPtOHDLM4"}
+{"$$deleted":true,"_id":"oY4ZFndIPtOHDLM4"}
+{"firstName":"Viresh","lastName":"Uberoy","email":"viresh@uberoy.com","password":"Password@01","confirmPassword":"Password@01","username":"Viresh","country":"Åland Islands","currency":"AFN","_id":"GeRHkRzke7DEzb9v"}
+{"$$deleted":true,"_id":"GeRHkRzke7DEzb9v"}
+{"firstName":"Viresh","lastName":"Uberoy","email":"viresh@uberoy.com","password":"Password@01","confirmPassword":"Password@01","username":"Viresh","country":"Andorra","currency":"AFN","_id":"L7RCI56tqlusOMam"}

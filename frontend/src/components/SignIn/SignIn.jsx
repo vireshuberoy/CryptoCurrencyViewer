@@ -63,8 +63,9 @@ export default function SignIn() {
       email,
       password,
     });
+
     if (response.data.success) {
-      setLoginToken();
+      setLoginToken(JSON.stringify(response.data.user));
       history.push("/");
       window.location.reload();
     } else {

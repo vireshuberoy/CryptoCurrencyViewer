@@ -42,7 +42,9 @@ export default function Top5(props) {
       }
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:5000/getTop5");
+        const response = await axios.get(
+          `http://localhost:5000/getTop5?currency=${loggedIn.currency}`
+        );
         setLoading(false);
         setTop5Data(response.data.data);
       } catch (err) {
@@ -96,7 +98,7 @@ export default function Top5(props) {
               {crypto.rank}
             </Typography>
             <Typography variant="body2" component="p">
-              <strong>Current Price (INR): </strong>
+              <strong>Current Price ({loggedIn.currency}): </strong>
               {crypto.price}
             </Typography>
             <Button

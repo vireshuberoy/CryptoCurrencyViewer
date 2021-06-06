@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -28,17 +28,20 @@ const useStyles = makeStyles({
 export default function Homepage(props) {
   const classes = useStyles();
   const history = useHistory();
+  const [see, setSee] = useState(false);
 
   useEffect(() => {
     (async () => {
       if (!loggedIn) {
         alert("You need to log in to view this page");
         history.push("/signin");
+      } else {
+        setSee(true);
       }
     })();
   }, [history]);
 
-  return (
+  return see && (
     <div>
       <Card className={classes.root} style={{ margin: "10px" }}>
         <CardContent>

@@ -41,7 +41,9 @@ export default function Cryptocurrency(props) {
   async function getGraphData() {
     const startDate = moment().utc().subtract(30, "days").format();
     const response = await axios.get(
-      `http://localhost:5000/sparkline/${encodeURIComponent(startDate)}/${id}`
+      `http://localhost:5000/sparkline/${encodeURIComponent(startDate)}/${id}/${
+        loggedIn.currency
+      }`
     );
     let timestamps = response.data.data[0].timestamps;
     timestamps = timestamps.map((ele) =>
@@ -128,7 +130,7 @@ export default function Cryptocurrency(props) {
           labels: xValues,
           datasets: [
             {
-              label: `Prices for ${id} for the past 30 days (x-axis) in INR (y-axis)`,
+              label: `Prices for ${id} for the past 30 days (x-axis) in ${loggedIn.currency} (y-axis)`,
               data: yValues,
               fill: true,
               borderColor: "rgb(75, 192, 192)",
