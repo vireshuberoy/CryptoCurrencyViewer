@@ -38,7 +38,7 @@ export default function NavBar() {
                 fontSize: "32px",
               }}
             >
-              BANKS
+              PLUTO
             </Link>
           </Typography>
           <Link
