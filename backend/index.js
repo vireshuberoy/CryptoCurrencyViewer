@@ -99,12 +99,19 @@ app.post("/signup", async (req, res) => {
 app.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
-  const document = await getDocumentFromDB(email);
-  const user = document[0];
-  if (user.password === password) {
-    return res.json({ success: true, user: user });
-  } else {
-    return res.json({ success: false });
+  try {
+    const document = await getDocumentFromDB(email);
+    const user = document[0];
+    if (user?.password === password) {
+      return res.json({ success: true, user: user });
+    } else {
+      return res.json({
+        success: false,
+        message: "Please check the stuff you've entered",
+      });
+    }
+  } catch (err) {
+    return res.json({ success: false, message: "Please check your details" });
   }
 });
 

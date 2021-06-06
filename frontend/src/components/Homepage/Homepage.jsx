@@ -85,7 +85,7 @@ export default function Homepage(props) {
             rules).
             <br />
             In the midst of all this, memes explode on social media.
-            Nevertheless, seriosu investors or those wiht some ability to absorb
+            Nevertheless, serious investors or those wiht some ability to absorb
             risks will be looking at this as a blip on the horizon that would
             likely see crypto prices spike again. There also exist a lot of
             applications/websites, that let you invest in crypto easily.
